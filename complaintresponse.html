@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Complaint Response Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      background-color: #f9f9f9;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    #output {
+      margin-top: 30px;
+      white-space: pre-wrap;
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Customer Complaint Response Generator</h2>
+
+  <label for="customerName">Customer First Name</label>
+  <input type="text" id="customerName" placeholder="e.g. Marcus">
+
+  <label for="businessName">Your Company Name</label>
+  <input type="text" id="businessName" placeholder="e.g. Top Notch Tax Suite">
+
+  <label for="complaint">Complaint Type</label>
+  <select id="complaint">
+    <option value="">-- Select Complaint Type --</option>
+    <option value="late">Product arrived late</option>
+    <option value="expectation">Service wasn’t what they expected</option>
+    <option value="rude">Rude employee interaction</option>
+    <option value="noresponse">No one responded to their message</option>
+    <option value="billing">Pricing or billing issue</option>
+    <option value="public">Public complaint (review or social post)</option>
+    <option value="dissatisfaction">General dissatisfaction</option>
+  </select>
+
+  <label for="tone">Customer Tone</label>
+  <select id="tone">
+    <option value="">-- Select Customer Tone --</option>
+    <option value="angry">Angry</option>
+    <option value="disappointed">Disappointed</option>
+    <option value="confused">Confused</option>
+    <option value="polite">Polite</option>
+    <option value="threatening">Threatening to leave a review</option>
+    <option value="kind">Kind</option>
+  </select>
+
+  <label for="outcome">Desired Outcome</label>
+  <select id="outcome">
+    <option value="">-- Select Desired Outcome --</option>
+    <option value="refund">Refund</option>
+    <option value="apology">Apology</option>
+    <option value="replacement">Replacement or redo</option>
+    <option value="explanation">Explanation</option>
+    <option value="heard">Just want to feel heard</option>
+    <option value="unsure">Not sure yet</option>
+  </select>
+
+  <label for="voice">Business Voice</label>
+  <select id="voice">
+    <option value="">-- Select Business Voice --</option>
+    <option value="friendly">Friendly and understanding</option>
+    <option value="warm">Warm and apologetic</option>
+    <option value="direct">Direct and professional</option>
+    <option value="playful">Lightly playful but still respectful</option>
+    <option value="nono">Calm and no-nonsense</option>
+  </select>
+
+  <button onclick="generateResponse()">Generate Response</button>
+
+  <div id="output"></div>
+
+  <script>
+    function generateResponse() {
+      const customerName = document.getElementById('customerName').value.trim() || 'Customer';
+      const businessName = document.getElementById('businessName').value.trim() || 'Our Team';
+      const complaint = document.getElementById('complaint').value;
+      const tone = document.getElementById('tone').value;
+      const outcome = document.getElementById('outcome').value;
+      const voice = document.getElementById('voice').value;
+
+      const complaintMap = {
+        late: "We sincerely apologize that your order did not arrive as expected. Timely delivery is a standard we uphold, and we understand how disappointing it is when we fall short.",
+        expectation: "Thank you for your feedback regarding the service you received. We recognize that we did not meet your expectations, and that is something we take very seriously.",
+        rude: "Please accept our sincere apologies for your interaction with a member of our team. Courtesy and respect are core to our service values, and your experience does not reflect the level of care we promise.",
+        noresponse: "Thank you for your patience and for giving us the opportunity to address this. It is never our intention to leave any message unanswered, and we regret the delay in communication.",
+        billing: "We understand your concern regarding billing and appreciate the opportunity to review the matter. Accuracy and transparency are essential to how we operate.",
+        public: "We came across your feedback and appreciate the chance to connect directly. Your voice is important to us, and we are grateful for the opportunity to improve.",
+        dissatisfaction: "We are genuinely sorry to hear that your experience did not reflect the care and quality we strive to provide. Your insight allows us to improve and better serve you."
+      };
+
+      const toneMap = {
+        angry: "We understand that emotions may be high, and we truly appreciate your honesty. We take these matters seriously and want to ensure your concerns are heard and addressed.",
+        disappointed: "We’re sorry we let you down. Your disappointment matters to us, and we are taking this seriously as we work to make things right.",
+        confused: "Thank you for expressing your concern. We understand things may have been unclear, and we’re here to help clarify and resolve this issue.",
+        polite: "We’re grateful for how respectfully you approached this situation. That speaks volumes, and we want to match that level of care in our response.",
+        threatening: "Thank you for being direct. We want to resolve this quickly and professionally, and we hope to earn back your confidence.",
+        kind: "We appreciate how kindly you shared your feedback. We value your perspective and will do everything we can to make this right."
+      };
+
+      const outcomeMap = {
+        refund: "We have reviewed your request for a refund and are taking the necessary steps to address it appropriately. You will receive a confirmation once the process has been initiated.",
+        apology: "Please accept our sincere apology. We are reviewing this internally and are committed to learning from the situation to ensure it does not happen again.",
+        replacement: "We would be honored to offer a replacement or redo to make this right. Your satisfaction is important to us, and we are committed to delivering the quality you expected.",
+        explanation: "We would like to provide some context to ensure you are fully informed. Based on our review, here is what we’ve uncovered: [Insert optional detail]. We believe in open and honest communication.",
+        heard: "We understand that sometimes the most important thing is simply to be heard. Your feedback is meaningful, and we are grateful for the opportunity to listen and respond with care.",
+        unsure: "We are more than happy to work together to find the best solution. Your concerns are valid, and we are here to support you through the next steps."
+      };
+
+      const voiceMap = {
+        friendly: "We’re truly grateful for the chance to improve. If there is anything else we can do to assist you, please don’t hesitate to let us know.",
+        warm: "Thank you again for allowing us to address this. We are committed to creating a better experience for you and appreciate your continued trust.",
+        direct: "We appreciate you bringing this matter to our attention. We will continue to follow up internally and keep you informed of any updates.",
+        playful: "While we didn’t get it right this time, we’re thankful for your feedback and the opportunity to improve. We look forward to earning back your trust.",
+        nono: "Your feedback is under review, and we are handling it with the attention it deserves. Thank you for helping us maintain the standard of service we believe in."
+      };
+
+      const message = `Hi ${customerName},\n\n${complaintMap[complaint] || ''}\n\n${toneMap[tone] || ''}\n\n${outcomeMap[outcome] || ''}\n\n${voiceMap[voice] || ''}\n\nWarmly,\nThe ${businessName} Team`;
+
+      document.getElementById('output').innerText = message;
+    }
+  </script>
+</body>
+</html>
